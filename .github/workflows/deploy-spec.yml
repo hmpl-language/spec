@@ -34,6 +34,9 @@ jobs:
       - name: Add .nojekyll file
         run: echo "" > build/.nojekyll
 
+      - name: Copy favicon.ico to build folder
+        run: cp favicon.ico build/
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
