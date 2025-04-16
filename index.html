@@ -4133,10 +4133,10 @@ p.ECMAaddress {
 <span class="hljs-keyword">const</span> templateFn = hmpl.<span class="hljs-title function_">compile</span>(
   <span class="hljs-string">`&lt;div&gt;
       &lt;button data-action="increment" id="btn"&gt;Click!&lt;/button&gt;
-      &lt;div&gt;Clicks: {{
+      &lt;div&gt;Clicks: #request{
         "src": "/api/clicks",
         "after": "click:#btn"
-      }}&lt;/div&gt;
+      }&lt;/div&gt;
   &lt;/div&gt;`</span>
 );
 
@@ -4220,11 +4220,9 @@ p.ECMAaddress {
       </figure></emu-table>
       <emu-example><figure><figcaption>Example (Informative)</figcaption>
         <pre><code class="javascript hljs"><span class="hljs-keyword">const</span> templateFn = hmpl.<span class="hljs-title function_">compile</span>(
-  <span class="hljs-string">`{ 
-     {
-       "src":"/api/test" 
-     } 
-   }`</span>,
+  <span class="hljs-string">`#request{
+    "src":"/api/test" 
+  }`</span>,
   {
     <span class="hljs-attr">memo</span>: <span class="hljs-literal">true</span>,
     <span class="hljs-attr">autoBody</span>: {
@@ -4246,7 +4244,7 @@ p.ECMAaddress {
         <emu-example><figure><figcaption>Example (Informative)</figcaption>
           <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">data-action</span>=<span class="hljs-string">"increment"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"btn"</span>&gt;</span>Click!<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Clicks: {{ "src": "/api/clicks", "after": "click:#btn" }}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Clicks: #request{ "src": "/api/clicks", "after": "click:#btn" }<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
         </figure></emu-example>
         <p>Key characteristics:</p>
@@ -4322,7 +4320,7 @@ p.ECMAaddress {
         <pre><code class="javascript hljs"><span class="hljs-keyword">const</span> request = hmpl.<span class="hljs-title function_">stringify</span>({
   <span class="hljs-attr">src</span>: <span class="hljs-string">"/api/test"</span>
 });
-<span class="hljs-keyword">const</span> templateFn = hmpl.<span class="hljs-title function_">compile</span>(<span class="hljs-string">`{<span class="hljs-subst">${request}</span>}`</span>);</code></pre>
+<span class="hljs-keyword">const</span> templateFn = hmpl.<span class="hljs-title function_">compile</span>(<span class="hljs-string">`#request{<span class="hljs-subst">${request}</span>}`</span>);</code></pre>
       </figure></emu-example>
       <p>Implementation notes:</p>
       <ul>
@@ -4632,11 +4630,9 @@ p.ECMAaddress {
           <h1><span class="secnum">3.2.1.1</span> Single Request Template</h1>
           <emu-example><figure><figcaption>Example (Informative)</figcaption>
             <pre><code class="javascript hljs"><span class="hljs-keyword">const</span> templateFn = hmpl.<span class="hljs-title function_">compile</span>(
-  <span class="hljs-string">`{ 
-     {
-       "src":"/api/test" 
-     } 
-   }`</span>
+  <span class="hljs-string">`#request{
+    "src":"/api/test" 
+  }`</span>
 );
 <span class="hljs-keyword">const</span> elementObj = <span class="hljs-title function_">templateFn</span>();</code></pre>
           </figure></emu-example>
@@ -4670,15 +4666,11 @@ p.ECMAaddress {
           <emu-example><figure><figcaption>Example (Informative)</figcaption>
             <pre><code class="javascript hljs"><span class="hljs-keyword">const</span> templateFn = hmpl.<span class="hljs-title function_">compile</span>(
   <span class="hljs-string">`&lt;div&gt;
-   {
-     {
-       "src":"/api/test"
-     }
+   #request{
+    "src":"/api/test"
    }
-   {
-     {
-       "src":"/api/test"
-     }
+   #request{
+    "src":"/api/test"
    }
 &lt;/div&gt;`</span>
 );
@@ -4791,7 +4783,7 @@ p.ECMAaddress {
     <emu-example><figure><figcaption>Example 1 (Informative)</figcaption>
       <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"getHTML"</span>&gt;</span>Get HTML!<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-  {{ "src":"/api/getHTML", method:"POST", after:"click:#getHTML" }}
+  #request{ "src":"/api/getHTML", method:"POST", after:"click:#getHTML" }
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
     </figure></emu-example>
 
@@ -4899,30 +4891,28 @@ p.ECMAaddress {
     </figure></emu-table>
 
     <emu-example><figure><figcaption>Example (Informative)</figcaption>
-      <pre><code class="html hljs">{
-  {
-    src: "/api/test",
-    method: "get",
-    after: "click:.target",
-    repeat: true,
-    indicators: [
-      {
-        trigger: "pending",
-        content: "<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>"
-      },
-      {
-        trigger: "rejected",
-        content: "<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Error<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>reload<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>"
-      }
-    ],
-    autoBody: {
-      formData: true
+      <pre><code class="html hljs">#request{
+  src: "/api/test",
+  method: "get",
+  after: "click:.target",
+  repeat: true,
+  indicators: [
+    {
+      trigger: "pending",
+      content: "<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>"
     },
-    sanitize: false,
-    disallowedTags: ["script", "style", "iframe"],
-    memo: true,
-    initId: "id1"
-  }
+    {
+      trigger: "rejected",
+      content: "<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Error<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>reload<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>"
+    }
+  ],
+  autoBody: {
+    formData: true
+  },
+  sanitize: false,
+  disallowedTags: ["script", "style", "iframe"],
+  memo: true,
+  initId: "id1"
 }</code></pre>
     </figure></emu-example>
 
@@ -5150,12 +5140,10 @@ p.ECMAaddress {
       <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Subscribe!"</span> /&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
-  {
-    {
-      "src":"/api/subscribe",
-      "after":"submit:#form",
-      "autoBody":true
-    }
+  #request{
+    "src":"/api/subscribe",
+    "after":"submit:#form",
+    "autoBody":true
   }
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
       </figure></emu-example>
@@ -5282,17 +5270,13 @@ p.ECMAaddress {
 
       <emu-example><figure><figcaption>Example 1 (Informative)</figcaption>
         <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
-  {
-    {
-      "src": "/api/test",
-      "initId": "1"
-    }
+  #request{
+    "src": "/api/test",
+    "initId": "1"
   }
-  {
-    {
-      "src": "/api/test",
-      "initId": 2
-    }
+  #request{
+    "src": "/api/test",
+    "initId": 2
   }
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
       </figure></emu-example>
