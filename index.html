@@ -4348,18 +4348,18 @@ p.ECMAaddress {
     <emu-clause id="stringify">
       <h1><span class="secnum">2.2</span> stringify</h1>
       <p>
-        Serializes <dfn tabindex="-1">HMPLRequestInfo</dfn> objects into JSON5 strings
-        suitable for template embedding.
+        Serializes <dfn tabindex="-1">HMPLRequestInfo</dfn> objects into request component
+        strings suitable for template embedding.
       </p>
       <emu-example><figure><figcaption>Example (Informative)</figcaption>
         <pre><code class="javascript hljs"><span class="hljs-keyword">const</span> info = hmpl.<span class="hljs-title function_">stringify</span>({
   <span class="hljs-attr">src</span>: <span class="hljs-string">"/api/test"</span>
 });
-<span class="hljs-keyword">const</span> templateFn = hmpl.<span class="hljs-title function_">compile</span>(<span class="hljs-string">`{{#request}}<span class="hljs-subst">${info}</span>{{/request}}`</span>);</code></pre>
+<span class="hljs-keyword">const</span> templateFn = hmpl.<span class="hljs-title function_">compile</span>(<span class="hljs-string">`<span class="hljs-subst">${info}</span>`</span>);
+<span class="hljs-comment">// {{#request src="/api/test"}}{{/request}}</span></code></pre>
       </figure></emu-example>
       <p>Implementation notes:</p>
       <ul>
-        <li>Uses JSON5 serialization for improved readability</li>
         <li>Maintains all original object properties</li>
         <li>Produces valid template syntax</li>
       </ul>
